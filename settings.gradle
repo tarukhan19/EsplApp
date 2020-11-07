@@ -1,0 +1,2 @@
+include ':app', ':bitframe'
+rootProject.name = "EsplApp"

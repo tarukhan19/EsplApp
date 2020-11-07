@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#cf6740</color>
+    <color name="colorPrimaryDark">#cf6740</color>
+    <color name="colorAccent">#f9a215</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+
+    <color name="gray">#888888</color>
+    <color name="or">#8D8D8D</color>
+    <color name="light_black">#555454</color>
+    <color name="blue">#3933FF</color>
+    <color name="red">#DB4438</color>
+    <color name="yellow">#FFF7D23E</color>
+    <color name="green">#006400</color>
+    <color name="grey">#DDDDDD</color>
+    <color name="lite_grey">#F0F0F0</color>
+    <color name="dimgrey">#696969</color>
+    <color name="transwhite">#99FFFFFF</color>
+
+    <color name="transgrey">#99FFFFFF</color>
+    <color name="darkgray">#0e212e</color>
+
+
+    <color name="red_bg_light">#ffebee</color>
+    <color name="purple_bg_light">#f3e5f5</color>
+    <color name="blue_bg_light">#e3f2fd</color>
+    <color name="green_bg_light">#e8f5e9</color>
+    <color name="blue_grey_bg_light">#eceff1</color>
+    <color name="yellow_bg_light">#fffde7</color>
+    <color name="orange_bg_light">#fff3e0</color>
+    <color name="grey_bg_light">#fafafa</color>
+</resources>

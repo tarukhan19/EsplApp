@@ -1,0 +1,208 @@
+package com.effizent.esplapp.Activity;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.effizent.esplapp.R;
+import com.effizent.esplapp.RetroApiResponses.LoginResult;
+import com.effizent.esplapp.Retropack.APIServices;
+import com.effizent.esplapp.Retropack.RetrofitFactory;
+import com.effizent.esplapp.databinding.ActivityLoginBinding;
+import com.effizent.esplapp.session.SessionManager;
+
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    ActivityLoginBinding binding;
+    String emailId, password;
+    ProgressDialog progressDialog;
+    SessionManager session;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+
+
+        initialize();
+    }
+
+    private void initialize() {
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            Window window = this.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
+        }
+        progressDialog = new ProgressDialog(this);
+        session = new SessionManager(this);
+        binding.loginBTN.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.loginBTN:
+                checkValidation();
+                break;
+        }
+    }
+
+    private void checkValidation() {
+        emailId = binding.emailIdET.getText().toString();
+        password = binding.passwordET.getText().toString();
+        if (emailId.isEmpty()) {
+            binding.transLL.setVisibility(View.VISIBLE);
+            openDialog("Enter valid Email ID.", "Warning!");
+        } else if (password.isEmpty()) {
+            binding.transLL.setVisibility(View.VISIBLE);
+
+            openDialog("Enter valid password.", "Warning!");
+
+        } else {
+            binding.transLL.setVisibility(View.VISIBLE);
+            login();
+        }
+    }
+
+    private void login() {
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        /////Step 4) Call this method when you want to login.//////
+        Retrofit retrofit = RetrofitFactory.getRetrofit();
+        APIServices service = retrofit.create(APIServices.class);
+        service.loginUser(emailId, password,"");
+        Call<LoginResult> call = service.loginUser(emailId, password,"");
+
+
+
+        ///Step 5) Define callback methods to be called when API sends response.
+
+        call.enqueue(new Callback<LoginResult>() {
+            @Override
+            public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
+                progressDialog.dismiss();
+                binding.transLL.setVisibility(View.GONE);
+                LoginResult loginResult = response.body();
+                if (loginResult.getCode().equalsIgnoreCase("200") &&
+                        loginResult.getMessage().equalsIgnoreCase("Success"))
+                {
+                    String id=loginResult.getDetailsArrayList().get(0).getId();
+                    String department=loginResult.getDetailsArrayList().get(0).getDepartment();
+                    String name=loginResult.getDetailsArrayList().get(0).getName();
+                    String email=loginResult.getDetailsArrayList().get(0).getEmail();
+                    String mobile=loginResult.getDetailsArrayList().get(0).getMobile();
+                    String teamLeader=loginResult.getDetailsArrayList().get(0).getTeamLeader();
+                    String profilePicture=loginResult.getDetailsArrayList().get(0).getProfilePicture();
+
+                    session.setLoginDetails(id,department,name,email,mobile,teamLeader,profilePicture);
+
+                    Intent intent=new Intent(LoginActivity.this,HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.trans_left_in,
+                            R.anim.trans_left_out);
+
+
+
+                }
+                else
+                {
+                    openDialog(loginResult.getMessage(),"Failure!");
+                }
+
+
+
+
+            }
+
+
+            @Override
+            public void onFailure(Call<LoginResult> call, Throwable t) {
+                progressDialog.dismiss();
+                Log.e("errorrrmessageeee", t.getMessage());
+
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    private void openDialog(String description, String title) {
+
+
+        final Dialog dialog = new Dialog(this, R.style.CustomDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.item_dialog);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.show();
+        TextView descriptionTV = dialog.findViewById(R.id.descriptionTV);
+        TextView titleTV = dialog.findViewById(R.id.titleTV);
+        ImageView imageView = dialog.findViewById(R.id.imageview);
+        Button cancelBTN = dialog.findViewById(R.id.cancelBTN);
+        Button okBTN = dialog.findViewById(R.id.okBTN);
+
+        descriptionTV.setText(description);
+        titleTV.setText(title);
+        if (title.equalsIgnoreCase("Warning!")) {
+            imageView.setImageResource(R.drawable.warning);
+            titleTV.setTextColor(getResources().getColor(R.color.red));
+            imageView.setImageResource(R.drawable.warning);
+        } else if (title.equalsIgnoreCase("Success!")) {
+            titleTV.setTextColor(getResources().getColor(R.color.green));
+            imageView.setImageResource(R.drawable.success);
+            titleTV.setText("Success!");
+        } else if (title.equalsIgnoreCase("Failure!")) {
+            titleTV.setTextColor(getResources().getColor(R.color.red));
+            imageView.setImageResource(R.drawable.error);
+            titleTV.setText("Failure!");
+        }
+        okBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.transLL.setVisibility(View.GONE);
+
+                if (title.equalsIgnoreCase("Warning!") || title.equalsIgnoreCase("Failure!")) {
+                    dialog.dismiss();
+                } else if (title.equalsIgnoreCase("Success!")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        cancelBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.transLL.setVisibility(View.GONE);
+
+                dialog.dismiss();
+            }
+        });
+    }
+}
