@@ -532,7 +532,14 @@ public class CreatePostFragment extends DialogFragment {
                 CreatePostResult  createPostResult = response.body();
                 if (createPostResult.getCode().equalsIgnoreCase("200")  && createPostResult.getStatus().equalsIgnoreCase("Success"))
                 {
-                   openDialog("Post created successfully!","Success!");
+                    binding.titleET.setText("");
+                    binding.descriptionET.setText("");
+                    photoBMList.clear();
+                    uriArrayList.clear();
+                    departmentlistnamerray.clear();
+                    binding.departmentrecycle.setVisibility(View.GONE);
+
+                    openDialog("Post created successfully!","Success!");
                 }
                 else
                 {
