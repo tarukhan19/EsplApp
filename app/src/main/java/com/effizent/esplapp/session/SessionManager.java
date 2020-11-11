@@ -18,16 +18,16 @@ public class SessionManager
     private static final String PREF_NAME = "salesformPref";
 
     // All Shared Preferences Keys
-    private static final String IS_LOGIN = "IsLoggedIn";
-    private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
-    private static final String IS_WORKING_HOURS_ADDED = "is_working_hours_added";
-    private static final String KEY_ID = "ID";
-    private static final String KEY_DEPARTMENT = "department";
-    private static final String KEY_NAME = "NAME";
-    private static final String KEY_EMAIL = "EMAIL";
-    private static final String KEY_MOBILE = "MOBILE";
-    private static final String KEY_TEAMLEADER = "TEAMLEADER";
-    private static final String KEY_PROFILEPICTURE = "PROFILEPIC";
+    public static final String IS_LOGIN = "IsLoggedIn";
+    public static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
+    public static final String IS_WORKING_HOURS_ADDED = "is_working_hours_added";
+    public static final String KEY_ID = "ID";
+    public static final String KEY_DEPARTMENT = "department";
+    public static final String KEY_NAME = "NAME";
+    public static final String KEY_EMAIL = "EMAIL";
+    public static final String KEY_MOBILE = "MOBILE";
+    public static final String KEY_TEAMLEADER = "TEAMLEADER";
+    public static final String KEY_PROFILEPICTURE = "PROFILEPIC";
 
 
 
@@ -35,6 +35,11 @@ public class SessionManager
         int PRIVATE_MODE = 0;
         pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
+    }
+
+    public void logoutUser() {
+        editor.clear();
+        editor.commit();
     }
 
 

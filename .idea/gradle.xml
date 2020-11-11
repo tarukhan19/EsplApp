@@ -12,8 +12,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/UniversalImageLoader-Library" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/bitframe" />
+            <option value="$PROJECT_DIR$/fluidbottomnavigation" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

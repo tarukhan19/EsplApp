@@ -6,6 +6,8 @@ import androidx.databinding.DataBindingUtil;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,7 +38,6 @@ import retrofit2.Retrofit;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     ActivityLoginBinding binding;
     String emailId, password;
-    ProgressDialog progressDialog;
     SessionManager session;
 
     @Override
@@ -55,8 +56,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
         }
-        progressDialog = new ProgressDialog(this);
         session = new SessionManager(this);
+        binding.progressbar.setProgressTintList(ColorStateList.valueOf(Color.WHITE));
+
         binding.loginBTN.setOnClickListener(this);
     }
 
@@ -82,14 +84,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         } else {
             binding.transLL.setVisibility(View.VISIBLE);
+            binding.progressbar.setVisibility(View.VISIBLE);
             login();
         }
     }
 
     private void login() {
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
 
         /////Step 4) Call this method when you want to login.//////
         Retrofit retrofit = RetrofitFactory.getRetrofit();
@@ -104,7 +104,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         call.enqueue(new Callback<LoginResult>() {
             @Override
             public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
-                progressDialog.dismiss();
+                binding.progressbar.setVisibility(View.GONE);
+
                 binding.transLL.setVisibility(View.GONE);
                 LoginResult loginResult = response.body();
                 if (loginResult.getCode().equalsIgnoreCase("200") &&
@@ -143,7 +144,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onFailure(Call<LoginResult> call, Throwable t) {
-                progressDialog.dismiss();
+                binding.progressbar.setVisibility(View.GONE);
                 Log.e("errorrrmessageeee", t.getMessage());
 
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
@@ -152,9 +153,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void openDialog(String description, String title) {
-
-
+    private void openDialog(String description, String title)
+    {
         final Dialog dialog = new Dialog(this, R.style.CustomDialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.item_dialog);

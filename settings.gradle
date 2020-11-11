@@ -1,2 +1,2 @@
-include ':app', ':bitframe'
+include ':app',  ':fluidbottomnavigation',':UniversalImageLoader-Library'
 rootProject.name = "EsplApp"
