@@ -1,7 +1,6 @@
 package com.effizent.esplapp.Retropack;
 
 import com.effizent.esplapp.RetroApiResponses.LoadDashBoardResult;
-import com.effizent.esplapp.RetroApiResponses.TimelinePostDTO;
 import com.effizent.esplapp.RetroApiResponses.CheckUserStatus;
 import com.effizent.esplapp.RetroApiResponses.CreatePostResult;
 import com.effizent.esplapp.RetroApiResponses.LoadDepartmentResult;

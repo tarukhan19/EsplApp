@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8dp"
+        app:cardCornerRadius="5dp"
+        android:elevation="3dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="@dimen/d_10"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:background="@drawable/whitebackgroud"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.2"
+
+                    android:gravity="start">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="@dimen/d_60"
+                        android:layout_height="@dimen/d_60"
+                        android:src="@mipmap/defaultpic"
+                        app:civ_border_color="@color/colorPrimaryDark"
+                        app:civ_border_width="2dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/createpostLL"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.8"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1"
+                        >
+                        <com.effizent.esplapp.cusFnt.TextViewBoldFont
+                            android:id="@+id/nameTV"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/app_name"
+                            android:textSize="12sp"
+                            android:layout_weight="0.5"
+                            android:textColor="@color/black"
+                            />
+
+                        <com.effizent.esplapp.cusFnt.TextViewBoldFont
+                            android:id="@+id/timeTV"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/app_name"
+                            android:layout_gravity="end"
+                            android:gravity="end"
+                            android:layout_weight="0.5"
+                            android:textSize="10sp"
+                            />
+                    </LinearLayout>
+
+                    <com.effizent.esplapp.cusFnt.TextViewBoldFont
+                        android:id="@+id/titleTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="@dimen/_5dp"
+                        android:textColor="@color/black"
+                        android:text="@string/profile"
+                        android:textSize="16sp" />
+
+                    <com.effizent.esplapp.cusFnt.TextViewAirenregular
+                        android:id="@+id/descriptionTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has?"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="5dp"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/imageLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5dp"
+                android:visibility="visible"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:id="@+id/singleImageLL"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="@dimen/d_200">
+
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true"
+                        android:id="@+id/singleimageIV"
+                        android:layout_gravity="center"
+                        android:src="@drawable/upload"
+                        android:gravity="center"
+                        app:riv_corner_radius="15dip"
+                        app:riv_border_color="@color/colorPrimaryDark"
+                        app:riv_border_width="1dp"
+                        />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/doubleimageImageLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d_200"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:weightSum="1"
+                    >
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true"
+                        android:id="@+id/doubleimage1IV"
+                        android:layout_gravity="center"
+                        android:src="@drawable/upload"
+                        android:gravity="center"
+                        android:layout_weight="0.5"
+                        app:riv_corner_radius="15dip"
+                        app:riv_border_color="@color/colorPrimaryDark"
+                        app:riv_border_width="1dp"
+                        />
+
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        >
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:adjustViewBounds="true"
+                            android:id="@+id/doubleimage2IV"
+                            android:layout_gravity="center"
+                            android:src="@drawable/upload"
+                            android:gravity="center"
+                            android:layout_marginLeft="5dp"
+                            app:riv_corner_radius="15dip"
+                            app:riv_border_color="@color/colorPrimaryDark"
+                            app:riv_border_width="1dp"
+                            />
+
+                        <LinearLayout
+                            android:id="@+id/countLL"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+
+                            android:background="@drawable/imagebackground"
+                            android:visibility="gone"
+                            >
+                            <com.effizent.esplapp.cusFnt.TextViewBoldFont
+                                android:id="@+id/countTV"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="+"
+                                android:textColor="@color/white"
+                                android:textSize="50sp"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center"
+                                />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--        <LinearLayout-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_gravity="center"-->
+            <!--            android:gravity="center"-->
+            <!--            >-->
+            <!--            <ImageView-->
+            <!--                android:id="@+id/likeIV"-->
+            <!--                android:layout_width="@dimen/d_40"-->
+            <!--                android:layout_height="@dimen/d_40"-->
+            <!--                -->
+            <!--                />-->
+            <!--        </LinearLayout>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d_10"/>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+</layout>

@@ -46,6 +46,8 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.effizent.esplapp.Activity.CustomGallery_Activity;
+import com.effizent.esplapp.Activity.HomeActivity;
+import com.effizent.esplapp.Activity.LoginActivity;
 import com.effizent.esplapp.Adapter.BitmapImageAdapter;
 import com.effizent.esplapp.Adapter.DepartmentAdapter;
 import com.effizent.esplapp.Adapter.DepartmentAdp;
@@ -474,6 +476,12 @@ public class CreatePostFragment extends DialogFragment {
 
                 if (title.equalsIgnoreCase("Warning!") || title.equalsIgnoreCase("Failure!")) {
                     dialog.dismiss();
+                    Intent intent=new Intent(getActivity(), HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+
+
+
                 } else if (title.equalsIgnoreCase("Success!")) {
                     dialog.dismiss();
                     maindialog.dismiss();
@@ -538,6 +546,7 @@ public class CreatePostFragment extends DialogFragment {
                     uriArrayList.clear();
                     departmentlistnamerray.clear();
                     binding.departmentrecycle.setVisibility(View.GONE);
+                    binding.photoView.setVisibility(View.GONE);
 
                     openDialog("Post created successfully!","Success!");
                 }

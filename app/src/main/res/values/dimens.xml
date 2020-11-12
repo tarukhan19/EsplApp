@@ -13,4 +13,7 @@
     <dimen name="d_35">35dp</dimen>
     <dimen name="d_80">80dp</dimen>
     <dimen name="_5dp">5dp</dimen>
+    <dimen name="d_200">200dp</dimen>
+    <dimen name="d_40">40dp</dimen>
+    <dimen name="_8dp">8dp</dimen>
 </resources>

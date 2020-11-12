@@ -16,7 +16,7 @@ public class LoadDashBoardResult {
 
     @SerializedName("Timeline_Post_List")
     @Expose
-    private ArrayList<TimelinePostDTO> timelinePostDTOArrayList;
+    private ArrayList<Timeline_Post_List> timelinePostDTOArrayList;
 
     public String getCode() {
         return Code;
@@ -26,7 +26,16 @@ public class LoadDashBoardResult {
         return Status;
     }
 
-    public ArrayList<TimelinePostDTO> getTimelinePostDTOArrayList() {
+    public ArrayList<Timeline_Post_List> getTimelinePostDTOArrayList() {
         return timelinePostDTOArrayList;
+    }
+
+    public LoadDashBoardResult() {
+    }
+
+    public LoadDashBoardResult(String code, String status, ArrayList<Timeline_Post_List> timelinePostDTOArrayList) {
+        Code = code;
+        Status = status;
+        this.timelinePostDTOArrayList = timelinePostDTOArrayList;
     }
 }
