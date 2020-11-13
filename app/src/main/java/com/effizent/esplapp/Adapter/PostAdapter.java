@@ -7,13 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.effizent.esplapp.DialogFragment.CreatePostFragment;
+import com.effizent.esplapp.DialogFragment.FullscreenImageFragment;
 import com.effizent.esplapp.R;
 import com.effizent.esplapp.RetroApiResponses.Timeline_Post_List;
 import com.effizent.esplapp.databinding.ItemDashboardBinding;
+import com.effizent.esplapp.session.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import java.io.UnsupportedEncodingException;
@@ -23,6 +29,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
     private Context mContext;
     ArrayList<Timeline_Post_List> timelinePostDTOArrayList;
     ItemDashboardBinding binding;
+    SessionManager sessionManager;
+    ArrayList <String> imageList;
 
 
 
@@ -36,6 +44,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
         binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.item_dashboard, parent, false);
+        sessionManager=new SessionManager(mContext.getApplicationContext());
+        imageList=new ArrayList<>();
         return new CustomViewHodler(binding);
     }
 
@@ -171,6 +181,25 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
             {
                 Log.e("exception",e.getLocalizedMessage());
             }
+
+
+            holder.binding.imageLL.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imageList.clear();
+                    for (int i=0;i<timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size();i++)
+                    {
+                        imageList.add(timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().get(i).getImage());
+                    }
+                    sessionManager.setList(imageList,position);
+
+                    FullscreenImageFragment fullscreenImageFragment = new FullscreenImageFragment();
+                    FragmentTransaction ft =((AppCompatActivity)mContext).getSupportFragmentManager().beginTransaction();
+                    fullscreenImageFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogFragmentTheme);
+                    ft.addToBackStack(null);
+                    fullscreenImageFragment.show(ft, "dialog");
+                }
+            });
 
 
         }

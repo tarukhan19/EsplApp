@@ -6,6 +6,7 @@ import android.content.SharedPreferences.Editor;
 
 import com.effizent.esplapp.Activity.LoginActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SessionManager
@@ -28,7 +29,24 @@ public class SessionManager
     public static final String KEY_MOBILE = "MOBILE";
     public static final String KEY_TEAMLEADER = "TEAMLEADER";
     public static final String KEY_PROFILEPICTURE = "PROFILEPIC";
+    public static final String KEY_LIST = "list";
+    public static final String KEY_POSITION = "position";
 
+    public HashMap<String, String> getList() {
+        HashMap<String, String> user = new HashMap<>();
+        user.put(KEY_LIST, pref.getString(KEY_LIST, ""));
+        user.put(KEY_POSITION, pref.getString(KEY_POSITION, ""));
+
+        return user;
+    }
+
+
+    public void setList(ArrayList<String> imageItemDTOArrayList,int position) {
+        editor.putString(KEY_LIST, String.valueOf(imageItemDTOArrayList));
+        editor.putString(KEY_POSITION, String.valueOf(position));
+
+        editor.commit();
+    }
 
 
     public SessionManager(Context context) {

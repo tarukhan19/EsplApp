@@ -476,15 +476,16 @@ public class CreatePostFragment extends DialogFragment {
 
                 if (title.equalsIgnoreCase("Warning!") || title.equalsIgnoreCase("Failure!")) {
                     dialog.dismiss();
-                    Intent intent=new Intent(getActivity(), HomeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
 
 
 
                 } else if (title.equalsIgnoreCase("Success!")) {
                     dialog.dismiss();
                     maindialog.dismiss();
+                    Intent intent=new Intent(getActivity(), HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+
                 }
             }
         });
