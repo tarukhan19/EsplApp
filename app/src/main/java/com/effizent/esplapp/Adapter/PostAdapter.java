@@ -59,7 +59,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
             final CustomViewHodler holder = (CustomViewHodler) h;
 
             try {
-                Log.e("size",timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().get(0).getImage()+"");
 
 
                 if (timelinePostDTOArrayList.get(position).getTitle().isEmpty())
@@ -99,13 +98,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
 
                 if ((timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size())==0)
                 {
-                    Log.e("size",timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size()+"");
 
                     holder.binding.imageLL.setVisibility(View.GONE);
                 }
                 else if ((timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size())==1)
                 {
-                    Log.e("size",timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size()+"");
 
                     holder.binding.imageLL.setVisibility(View.VISIBLE);
                     holder.binding.singleImageLL.setVisibility(View.VISIBLE);
@@ -118,7 +115,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
 
                 else if ((timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size())==2)
                 {
-                    Log.e("size",timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size()+"");
 
                     holder.binding.imageLL.setVisibility(View.VISIBLE);
                     holder.binding.singleImageLL.setVisibility(View.GONE);
@@ -135,7 +131,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
 
                 else if ((timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size())==3)
                 {
-                    Log.e("size",timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size()+"");
 
                     holder.binding.imageLL.setVisibility(View.VISIBLE);
                     holder.binding.singleImageLL.setVisibility(View.VISIBLE);
@@ -156,7 +151,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
 
                 else
                 {
-                    Log.e("size",timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size()+"");
 
                     holder.binding.imageLL.setVisibility(View.VISIBLE);
                     holder.binding.singleImageLL.setVisibility(View.VISIBLE);

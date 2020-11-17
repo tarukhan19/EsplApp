@@ -33,7 +33,7 @@ public class Timeline_Post_List {
 
     @SerializedName("Images")
     @Expose
-    private ArrayList<Images> timelineImageDTOArrayList;
+    private ArrayList<Images> timelineImageDTOArrayList=null;
     public Timeline_Post_List() {
     }
     public Timeline_Post_List(String title, String id, String description, String profilePic, String name, String date, ArrayList<Images> timelineImageDTOArrayList) {

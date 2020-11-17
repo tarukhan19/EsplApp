@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -157,6 +158,8 @@ ArrayList<FluidBottomNavigationItem> fluidBottomNavigationItemArrayList;
         logoutIV = toolbar.findViewById(R.id.logoutIV);
         toolbartitle = toolbar.findViewById(R.id.toolbartitle);
         mHandler = new Handler();
+
+        Log.e("userid",sessionManager.getLoginDetails().get(SessionManager.KEY_ID));
         loadHomeFragment();
 
 

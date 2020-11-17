@@ -96,7 +96,7 @@ public class CreatePostFragment extends DialogFragment {
 
     private final static int ALL_PERMISSIONS_RESULT = 107;
     private final static int IMAGE_RESULT = 200;
-
+    String fileextension;
     Bitmap scaledBitmap ;
     Uri uri;
     private ArrayList<Bitmap> photoBMList;
@@ -210,7 +210,7 @@ public class CreatePostFragment extends DialogFragment {
         binding.photoView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         photoBMList = new ArrayList<>();
         uriArrayList=new ArrayList<>();
-        photoADP = new BitmapImageAdapter(getActivity(), photoBMList);
+        photoADP = new BitmapImageAdapter(getActivity(), photoBMList,uriArrayList);
         binding.photoView.setAdapter(photoADP);
         departmentlistnamerray = new ArrayList<>();
 
@@ -315,19 +315,34 @@ public class CreatePostFragment extends DialogFragment {
                     {
                         String image=selectedImages.get(i);
                         String filePath = getRealPathFromURI(image);
+
                         Log.e("filePath",filePath);
 
                         try {
                             File imgFile = new  File(filePath);
-                            if(imgFile.exists()){
+                            if(imgFile.exists())
+                            {
                                 scaledBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                               uri = Uri.fromFile(imgFile);
-                            }
-                            Log.e("scaledBitmap",scaledBitmap+"");
+                                uri = Uri.fromFile(imgFile);
+                                fileextension= getFileExt(uri.getPath( ));
+                                Log.e("fileextension",fileextension+"");
 
-                            binding.photoView.setVisibility(View.VISIBLE);
-                            photoBMList.add(scaledBitmap);
-                            uriArrayList.add(uri);
+                            }
+
+                            if (fileextension.equalsIgnoreCase(".jpg") ||
+                                    fileextension.equalsIgnoreCase(".png") ||
+                                    fileextension.equalsIgnoreCase(".jpeg"))
+                            {
+                                binding.photoView.setVisibility(View.VISIBLE);
+                                photoBMList.add(scaledBitmap);
+                                uriArrayList.add(uri);
+                            }
+                            else
+                            {
+                                openDialog("Upload valid image fomat(jpg/jpeg/.png)!","Failure!");
+                            }
+
+
 
                         } catch(Exception e) {
                             e.getMessage();
@@ -346,6 +361,9 @@ public class CreatePostFragment extends DialogFragment {
         }
     }
 
+    public static String getFileExt(String fileName) {
+        return fileName.substring(fileName.lastIndexOf("."), fileName.length());
+    }
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
@@ -412,7 +430,8 @@ public class CreatePostFragment extends DialogFragment {
                     }
                 }
 
-                if (permissionsRejected.size() > 0) {
+                if (permissionsRejected.size() > 0)
+                {
 
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -519,7 +538,7 @@ public class CreatePostFragment extends DialogFragment {
 
         if (uriArrayList != null) {
             // create part for file (photo, video, ...)
-            for (int i = 0; i < photoBMList.size(); i++) {
+            for (int i = 0; i < uriArrayList.size(); i++) {
                 parts.add(prepareFilePart("image"+i, uriArrayList.get(i)));
             }
         }

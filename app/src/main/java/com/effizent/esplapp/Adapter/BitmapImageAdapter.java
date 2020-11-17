@@ -2,6 +2,7 @@ package com.effizent.esplapp.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +23,12 @@ public class BitmapImageAdapter extends RecyclerView.Adapter<BitmapImageAdapter.
 
     private Context mContext;
     ArrayList<Bitmap> bmList;
-
-    public BitmapImageAdapter(Context context, ArrayList<Bitmap> photoBMList)
+    ArrayList<Uri> uriArrayList;
+    public BitmapImageAdapter(Context context, ArrayList<Bitmap> photoBMList, ArrayList<Uri> uriArrayList)
     {
         this.mContext = context;
         this.bmList = photoBMList;
+        this.uriArrayList=uriArrayList;
     }
 
     @Override
@@ -47,6 +49,7 @@ public class BitmapImageAdapter extends RecyclerView.Adapter<BitmapImageAdapter.
             @Override
             public void onClick(View view) {
                 bmList.remove(position);
+                uriArrayList.remove(position);
                 notifyDataSetChanged();
             }
         });
