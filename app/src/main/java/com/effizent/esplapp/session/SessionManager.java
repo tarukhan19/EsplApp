@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.effizent.esplapp.Activity.LoginActivity;
+import com.effizent.esplapp.RetroApiResponses.LoadDashBoardResult;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +33,9 @@ public class SessionManager
     public static final String KEY_PROFILEPICTURE = "PROFILEPIC";
     public static final String KEY_LIST = "list";
     public static final String KEY_POSITION = "position";
+    public static final String KEY_DASHBOARD_RESPONSE="dashboardresp";
+    public static final String KEY_DEVICE_TOKEN = "devicetoken";
+
 
     public HashMap<String, String> getList() {
         HashMap<String, String> user = new HashMap<>();
@@ -92,5 +97,36 @@ public class SessionManager
 
         return user;
     }
+
+
+
+    public void setDeviceToken(String id) {
+        editor.putString(KEY_DEVICE_TOKEN, id);
+
+        editor.commit();
+    }
+
+    public HashMap<String, String> getDeviceToken() {
+        HashMap<String, String> user = new HashMap<>();
+        user.put(KEY_DEVICE_TOKEN, pref.getString(KEY_DEVICE_TOKEN, ""));
+
+        return user;
+    }
+
+    public LoadDashBoardResult getDashBoardRespone() {
+        Gson gson = new Gson();
+        String json = pref.getString(KEY_DASHBOARD_RESPONSE, "");
+        LoadDashBoardResult obj = gson.fromJson(json, LoadDashBoardResult.class);
+        return obj;
+    }
+
+
+    public void setDashBoardRespone(LoadDashBoardResult loadDashBoardResult) {
+        Gson gson = new Gson();
+        String json = gson.toJson(loadDashBoardResult);
+        editor.putString(KEY_DASHBOARD_RESPONSE, json);
+        editor.commit();
+    }
+
 
 }

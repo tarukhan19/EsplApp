@@ -104,17 +104,12 @@ public class CreatePostFragment extends DialogFragment {
 
     private BitmapImageAdapter photoADP;
     public static final String CustomGalleryIntentKey = "ImageArray";//Set Intent Key Value
-
-
     Dialog departmentDialog;
     AlertDialog.Builder departmentalertdialog;
     View departmentView;
     ArrayList<String>  departmentlistnamerray;
-
     ArrayList<DepartmentDTO> departmentDTOArrayList;
-
     RecyclerView departmentrv;
-
     DepartmentAdapter departmentAdapter;
 
 
@@ -193,7 +188,6 @@ public class CreatePostFragment extends DialogFragment {
         logoutIV = toolbar.findViewById(R.id.logoutIV);
         toolbartitle = toolbar.findViewById(R.id.toolbartitle);
         session = new SessionManager(getActivity());
-
 
         logoutIV.setVisibility(View.GONE);
         toolbartitle.setText("Create Post");
@@ -635,6 +629,10 @@ public class CreatePostFragment extends DialogFragment {
                     for (int i = 0; i < modelTestResult.getDepartmentDTOArrayList().size(); i++) {
                         DepartmentDTO departmentDTO = new DepartmentDTO();
                         departmentDTO.setDeptName(modelTestResult.getDepartmentDTOArrayList().get(i).getDeptName());
+                        if (session.getLoginDetails().get(SessionManager.KEY_DEPARTMENT).equalsIgnoreCase(modelTestResult.getDepartmentDTOArrayList().get(i).getDeptName()))
+                        {
+                           departmentDTO.setSelected(true);
+                        }
 
                         Log.e("getDeptName",modelTestResult.getDepartmentDTOArrayList().get(i).getDeptName());
 

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -19,16 +18,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.effizent.esplapp.R;
 import com.effizent.esplapp.RetroApiResponses.LoginResult;
 import com.effizent.esplapp.Retropack.APIServices;
 import com.effizent.esplapp.Retropack.RetrofitFactory;
 import com.effizent.esplapp.databinding.ActivityLoginBinding;
+import com.effizent.esplapp.javaclass.DeviceToken;
 import com.effizent.esplapp.session.SessionManager;
-
-import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,8 +33,9 @@ import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     ActivityLoginBinding binding;
-    String emailId, password;
+    String emailId, password,deviceId;
     SessionManager session;
+    DeviceToken deviceToken=new DeviceToken();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +46,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initialize();
     }
 
-    private void initialize() {
+    private void initialize()
+    {
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window window = this.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -60,6 +58,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         binding.progressbar.setProgressTintList(ColorStateList.valueOf(Color.WHITE));
 
         binding.loginBTN.setOnClickListener(this);
+
     }
 
     @Override
@@ -71,9 +70,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void checkValidation() {
+    private void checkValidation()
+    {
         emailId = binding.emailIdET.getText().toString();
         password = binding.passwordET.getText().toString();
+        deviceId=session.getDeviceToken().get(SessionManager.KEY_DEVICE_TOKEN);
+        Log.e("deviceId",deviceId);
         if (emailId.isEmpty()) {
             binding.transLL.setVisibility(View.VISIBLE);
             openDialog("Enter valid Email ID.", "Warning!");
@@ -94,8 +96,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         /////Step 4) Call this method when you want to login.//////
         Retrofit retrofit = RetrofitFactory.getRetrofit();
         APIServices service = retrofit.create(APIServices.class);
-        service.loginUser(emailId, password,"");
-        Call<LoginResult> call = service.loginUser(emailId, password,"");
+        service.loginUser(emailId, password, deviceId );
+        Call<LoginResult> call = service.loginUser(emailId, password, deviceId);
+
 
 
 

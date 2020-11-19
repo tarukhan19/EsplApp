@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "717200541885",
+    "firebase_url": "https://homelander-7b8b4.firebaseio.com",
+    "project_id": "homelander-7b8b4",
+    "storage_bucket": "homelander-7b8b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717200541885:android:ec17ab6130a10f0c90cfd4",
+        "android_client_info": {
+          "package_name": "com.effizent.esplapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717200541885-sm9f1gp0m5s77qneu2qo9t1t1qfoh9qa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.effizent.esplapp",
+            "certificate_hash": "08b02c61e1c4675d8fa43378e7742492ece99225"
+          }
+        },
+        {
+          "client_id": "717200541885-405djhsc0vfdcf3pavgi2blfrved4kb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGGu9-ZfIlcQioQafTtfuxJI8O3ZRLRRk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "717200541885-405djhsc0vfdcf3pavgi2blfrved4kb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

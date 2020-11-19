@@ -47,15 +47,16 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Cu
 
         final DepartmentDTO departmentDTO = departmentDTOS.get(position);
         holder.text.setText(departmentDTO.getDeptName());
-        holder.text.setTextColor(departmentDTO.isSelected() ? Color.CYAN : Color.BLACK);
+        holder.text.setTextColor(departmentDTO.isSelected() ? mContext.getResources().getColor(R.color.colorPrimaryDark)
+                : mContext.getResources().getColor(R.color.black));
 
         holder.text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 departmentDTO.setSelected(!departmentDTO.isSelected());
-                holder.text.setTextColor(departmentDTO.isSelected() ? Color.CYAN : Color.BLACK);
-
+                holder.text.setTextColor(departmentDTO.isSelected() ? mContext.getResources().getColor(R.color.colorPrimaryDark)
+                        : mContext.getResources().getColor(R.color.black));
 
                 if (departmentDTO.isSelected()) {
                     departmentrecycle.setVisibility(View.VISIBLE);

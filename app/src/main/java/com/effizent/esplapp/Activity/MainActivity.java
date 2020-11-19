@@ -9,11 +9,13 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.effizent.esplapp.R;
+import com.effizent.esplapp.javaclass.DeviceToken;
 import com.effizent.esplapp.session.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
     private static final long SPLASH_TIME_OUT =5000 ;
     SessionManager session;
+    DeviceToken deviceToken=new DeviceToken();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         session = new SessionManager(getApplicationContext());
+        deviceToken.getDeviceToken(session);
         if (android.os.Build.VERSION.SDK_INT >= 21)
         {
             Window window = this.getWindow();
