@@ -108,10 +108,12 @@ FragmentHomeBinding binding;
         binding.recycleview.scheduleLayoutAnimation();
         homeFragment=this;
 
-        if (!session.getDashBoardRespone().toString().isEmpty())
-        {
-            parseData();
-        }
+//        Log.e("response",session.getDashBoardRespone().toString());
+
+//        if (!session.getDashBoardRespone().toString().isEmpty())
+//        {
+//            parseData();
+//        }
 
     }
 

@@ -1,6 +1,7 @@
 package com.effizent.esplapp.javaclass;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.effizent.esplapp.Adapter.PostAdapter;
@@ -34,7 +35,10 @@ public class Api {
             @Override
             public void onResponse(Call<LoadDashBoardResult> call, retrofit2.Response<LoadDashBoardResult> response) {
                 LoadDashBoardResult modelTestResult = response.body();
+                Log.e("responegetcode",modelTestResult.getCode());
                 session.setDashBoardRespone(modelTestResult);
+
+
 
                 HomeFragment.getInstance().runUi();
 

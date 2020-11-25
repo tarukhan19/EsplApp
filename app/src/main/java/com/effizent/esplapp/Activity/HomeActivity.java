@@ -176,9 +176,11 @@ public class HomeActivity extends AppCompatActivity
         logoutIV = toolbar.findViewById(R.id.logoutIV);
         toolbartitle = toolbar.findViewById(R.id.toolbartitle);
         mHandler = new Handler();
+        new Api().getData(sessionManager,this);
+
         loadHomeFragment();
         checkUpdate();
-        new Api().getData(sessionManager,this);
+
     }
 
     private void loadHomeFragment()
