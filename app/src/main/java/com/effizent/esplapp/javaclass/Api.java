@@ -4,16 +4,13 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.effizent.esplapp.Adapter.PostAdapter;
+import com.effizent.esplapp.Activity.LoginActivity;
+import com.effizent.esplapp.DialogFragment.CreatePostFragment;
 import com.effizent.esplapp.Fragment.HomeFragment;
-import com.effizent.esplapp.Model.Images;
 import com.effizent.esplapp.RetroApiResponses.LoadDashBoardResult;
-import com.effizent.esplapp.RetroApiResponses.Timeline_Post_List;
 import com.effizent.esplapp.Retropack.APIServices;
 import com.effizent.esplapp.Retropack.RetrofitFactory;
 import com.effizent.esplapp.session.SessionManager;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,7 +18,7 @@ import retrofit2.Retrofit;
 
 public class Api {
 
-    public void getData(SessionManager session,  Context mcontext)
+    public void getData(SessionManager session, Context mcontext, String from)
     {
         Retrofit retrofit = RetrofitFactory.getRetrofit();
         APIServices service = retrofit.create(APIServices.class);
@@ -38,9 +35,17 @@ public class Api {
                 Log.e("responegetcode",modelTestResult.getCode());
                 session.setDashBoardRespone(modelTestResult);
 
+                if (from.equalsIgnoreCase("home"))
+                {
+                    HomeFragment.getInstance().runUi();
+                }
+                else if (from.equalsIgnoreCase("login"))
+                {
+                  LoginActivity.getInstance().runUi();
+
+                }
 
 
-                HomeFragment.getInstance().runUi();
 
 
             }

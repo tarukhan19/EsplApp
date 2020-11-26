@@ -87,7 +87,7 @@ public class CustomGallery_Activity extends AppCompatActivity implements View.On
 
     }
 
-    //Set Up GridView method
+
     private void setUpGridView() {
         imagesAdapter = new GridView_Adapter(CustomGallery_Activity.this, galleryImageUrls, true);
         galleryImagesGridView.setAdapter(imagesAdapter);
@@ -115,10 +115,8 @@ public class CustomGallery_Activity extends AppCompatActivity implements View.On
         switch (view.getId()) {
             case R.id.selectImagesBtn:
 
-                //When button is clicked then fill array with selected images
-                ArrayList<String> selectedItems = imagesAdapter.getCheckedItems();
 
-                //Send back result to MainActivity with selected images
+                ArrayList<String> selectedItems = imagesAdapter.getCheckedItems();
                 Intent intent = new Intent();
                 intent.putExtra(CreatePostFragment.CustomGalleryIntentKey, selectedItems.toString());//Convert Array into string to pass data
                 setResult(RESULT_OK, intent);//Set result OK

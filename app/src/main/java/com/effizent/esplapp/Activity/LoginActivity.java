@@ -1,5 +1,6 @@
 package com.effizent.esplapp.Activity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,11 +20,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.effizent.esplapp.Fragment.HomeFragment;
 import com.effizent.esplapp.R;
 import com.effizent.esplapp.RetroApiResponses.LoginResult;
 import com.effizent.esplapp.Retropack.APIServices;
 import com.effizent.esplapp.Retropack.RetrofitFactory;
 import com.effizent.esplapp.databinding.ActivityLoginBinding;
+import com.effizent.esplapp.javaclass.Api;
 import com.effizent.esplapp.javaclass.DeviceToken;
 import com.effizent.esplapp.session.SessionManager;
 
@@ -36,6 +40,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String emailId, password,deviceId;
     SessionManager session;
     DeviceToken deviceToken=new DeviceToken();
+   static LoginActivity loginActivity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         binding.progressbar.setProgressTintList(ColorStateList.valueOf(Color.WHITE));
 
         binding.loginBTN.setOnClickListener(this);
-
+        loginActivity=this;
     }
 
     @Override
@@ -98,6 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         APIServices service = retrofit.create(APIServices.class);
         service.loginUser(emailId, password, deviceId );
         Call<LoginResult> call = service.loginUser(emailId, password, deviceId);
+        Log.e("deviceId", deviceId);
 
 
 
@@ -123,13 +130,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     String profilePicture=loginResult.getDetailsArrayList().get(0).getProfilePicture();
 
                     session.setLoginDetails(id,department,name,email,mobile,teamLeader,profilePicture);
+                    new Api().getData(session,LoginActivity.this,"login");
 
-                    Intent intent=new Intent(LoginActivity.this,HomeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-
-                    overridePendingTransition(R.anim.trans_left_in,
-                            R.anim.trans_left_out);
 
 
 
@@ -154,6 +156,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
+    }
+
+
+
+    public static LoginActivity getInstance() {
+        return loginActivity;
+    }
+
+
+    public void runUi() {
+
+        new Thread() {
+            public void run() {
+                try {
+                    runOnUiThread(new Runnable() {
+
+                        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                        @Override
+                        public void run() {
+                            Intent intent=new Intent(LoginActivity.this,HomeActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+
+                            overridePendingTransition(R.anim.trans_left_in,
+                                    R.anim.trans_left_out);
+
+                        }
+                    });
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
     }
 
     private void openDialog(String description, String title)

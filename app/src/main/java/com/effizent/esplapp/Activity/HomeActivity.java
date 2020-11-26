@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Application;
@@ -61,6 +62,12 @@ public class HomeActivity extends AppCompatActivity
     AppUpdateManager appUpdateManager;
     private static final int MY_REQUEST_CODE = 11;
 
+
+    private HomeFragment homeFragment = new HomeFragment();
+    private ProfileFragment profileFragment = new ProfileFragment();
+    private NotificationFragment notificationFragment = new NotificationFragment();
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private Fragment activeFragment=homeFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -76,15 +83,21 @@ public class HomeActivity extends AppCompatActivity
                 {
                     case 0:
                         CURRENT_TAG = ID_HOME;
-                        loadHomeFragment();
+                        fragmentManager.beginTransaction().hide(activeFragment).show(homeFragment).commit();
+                        activeFragment=homeFragment;
+                        toolbartitle.setText("Home");
                         break;
                     case 1:
                         CURRENT_TAG = ID_PROFILE;
-                        loadHomeFragment();
+                        fragmentManager.beginTransaction().hide(activeFragment).show(profileFragment).commit();
+                        activeFragment=profileFragment;
+                        toolbartitle.setText("Profile");
                         break;
                     case 2:
                         CURRENT_TAG = ID_NOTIFICATION;
-                        loadHomeFragment();
+                        fragmentManager.beginTransaction().hide(activeFragment).show(notificationFragment).commit();
+                        activeFragment=notificationFragment;
+                        toolbartitle.setText("Notification");
                         break;
                 }
             }
@@ -98,7 +111,7 @@ public class HomeActivity extends AppCompatActivity
                     finish();
                 } else {
                     CURRENT_TAG = ID_HOME;
-                    loadHomeFragment();
+                 //   loadHomeFragment();
                     binding.fluidBottomNavigation.selectTab(0);
                 }
             }
@@ -157,16 +170,12 @@ public class HomeActivity extends AppCompatActivity
         fluidBottomNavigationItemArrayList.add(new FluidBottomNavigationItem(
                 getString(R.string.home),
                 ContextCompat.getDrawable(this, R.mipmap.home)));
-
-
         fluidBottomNavigationItemArrayList.add(new FluidBottomNavigationItem(
                 getString(R.string.profile),
                 ContextCompat.getDrawable(this, R.mipmap.profile)));
         fluidBottomNavigationItemArrayList.add(new FluidBottomNavigationItem(
                 getString(R.string.notification),
                 ContextCompat.getDrawable(this, R.mipmap.notification)));
-
-
         sessionManager = new SessionManager(getApplicationContext());
 
 
@@ -176,34 +185,48 @@ public class HomeActivity extends AppCompatActivity
         logoutIV = toolbar.findViewById(R.id.logoutIV);
         toolbartitle = toolbar.findViewById(R.id.toolbartitle);
         mHandler = new Handler();
-        new Api().getData(sessionManager,this);
+        //new Api().getData(sessionManager,this,"home");
 
-        loadHomeFragment();
+        fragmentManager.beginTransaction().add(R.id.content_frame, homeFragment, "USER").hide(homeFragment)
+                .add(R.id.content_frame, profileFragment, "PROFILE").hide(profileFragment)
+                .add(R.id.content_frame, notificationFragment, "NOTIFICATION").hide(notificationFragment).commit();
+
+
+        fragmentManager.beginTransaction().hide(activeFragment).show(homeFragment).commit();
+        toolbartitle.setText("Home");
+
         checkUpdate();
 
+
+
+
     }
 
-    private void loadHomeFragment()
-    {
-        Runnable mPendingRunnable = new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                Fragment fragment = getHomeFragment();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.content_frame, fragment, String.valueOf(CURRENT_TAG));
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        };
-
-        if (mPendingRunnable != null)
-        {
-            mHandler.post(mPendingRunnable);
-        }
-        invalidateOptionsMenu();
-    }
+//    private void loadHomeFragment()
+//    {
+//        Runnable mPendingRunnable = new Runnable()
+//        {
+//            @Override
+//            public void run()
+//            {
+//                fragmentManager.beginTransaction().hide(activeFragment).show(homeFragment).commit();
+//                activeFragment = getHomeFragment();
+//
+//
+////                Fragment fragment = getHomeFragment();
+////                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+////                fragmentTransaction.replace(R.id.content_frame, fragment, String.valueOf(CURRENT_TAG));
+////                fragmentTransaction.addToBackStack(null);
+////                fragmentTransaction.commit();
+//            }
+//        };
+//
+//        if (mPendingRunnable != null)
+//        {
+//            mHandler.post(mPendingRunnable);
+//        }
+//        invalidateOptionsMenu();
+//    }
 
 
     private Fragment getHomeFragment()
@@ -211,30 +234,37 @@ public class HomeActivity extends AppCompatActivity
         switch (CURRENT_TAG)
         {
             case 0:
-                HomeFragment homeFragment = new HomeFragment();
+//                HomeFragment homeFragment = new HomeFragment();
+                fragmentManager.beginTransaction().hide(activeFragment).show(homeFragment).commit();
+
                 CURRENT_TAG = ID_HOME;
+                activeFragment=homeFragment;
                 toolbartitle.setText("Home");
                 return homeFragment;
 
             case 1:
+                fragmentManager.beginTransaction().hide(activeFragment).show(profileFragment).commit();
 
-                ProfileFragment profileFragment = new ProfileFragment();
+//                ProfileFragment profileFragment = new ProfileFragment();
                 CURRENT_TAG = ID_PROFILE;
+                activeFragment=profileFragment;
                 toolbartitle.setText("Profile");
                 return profileFragment;
 
 
             case 2:
+                fragmentManager.beginTransaction().hide(activeFragment).show(notificationFragment).commit();
 
-                NotificationFragment notificationFragment = new NotificationFragment();
+//                NotificationFragment notificationFragment = new NotificationFragment();
                 CURRENT_TAG = ID_NOTIFICATION;
+                activeFragment=notificationFragment;
                 toolbartitle.setText("Notification");
                 return notificationFragment;
 
 
 
             default:
-                return new HomeFragment();
+                return homeFragment;
         }
 
 
@@ -248,7 +278,9 @@ public class HomeActivity extends AppCompatActivity
             finish();
         } else {
             CURRENT_TAG = ID_HOME;
-            loadHomeFragment();
+            fragmentManager.beginTransaction().hide(activeFragment).show(homeFragment).commit();
+            activeFragment=homeFragment;
+            toolbartitle.setText("Home");
             binding.fluidBottomNavigation.selectTab(0);
         }
     }

@@ -59,6 +59,7 @@ import com.effizent.esplapp.Retropack.APIServices;
 import com.effizent.esplapp.Retropack.RetrofitFactory;
 import com.effizent.esplapp.Utils.FileUtils;
 import com.effizent.esplapp.databinding.FragmentCreatePostBinding;
+import com.effizent.esplapp.javaclass.Api;
 import com.effizent.esplapp.session.SessionManager;
 
 import org.json.JSONArray;
@@ -561,7 +562,7 @@ public class CreatePostFragment extends DialogFragment {
                     departmentlistnamerray.clear();
                     binding.departmentrecycle.setVisibility(View.GONE);
                     binding.photoView.setVisibility(View.GONE);
-
+                    new Api().getData(session,getActivity(),"createpost");
                     openDialog("Post created successfully!","Success!");
                 }
                 else
