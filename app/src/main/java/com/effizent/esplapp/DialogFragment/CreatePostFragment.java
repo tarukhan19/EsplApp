@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
@@ -51,6 +52,7 @@ import com.effizent.esplapp.Activity.LoginActivity;
 import com.effizent.esplapp.Adapter.BitmapImageAdapter;
 import com.effizent.esplapp.Adapter.DepartmentAdapter;
 import com.effizent.esplapp.Adapter.DepartmentAdp;
+import com.effizent.esplapp.Fragment.HomeFragment;
 import com.effizent.esplapp.Model.DepartmentDTO;
 import com.effizent.esplapp.R;
 import com.effizent.esplapp.RetroApiResponses.CreatePostResult;
@@ -58,6 +60,7 @@ import com.effizent.esplapp.RetroApiResponses.LoadDepartmentResult;
 import com.effizent.esplapp.Retropack.APIServices;
 import com.effizent.esplapp.Retropack.RetrofitFactory;
 import com.effizent.esplapp.Utils.FileUtils;
+import com.effizent.esplapp.Utils.TimeConversion;
 import com.effizent.esplapp.databinding.FragmentCreatePostBinding;
 import com.effizent.esplapp.javaclass.Api;
 import com.effizent.esplapp.session.SessionManager;
@@ -112,7 +115,7 @@ public class CreatePostFragment extends DialogFragment {
     ArrayList<DepartmentDTO> departmentDTOArrayList;
     RecyclerView departmentrv;
     DepartmentAdapter departmentAdapter;
-
+    static CreatePostFragment createPostFragment;
 
     public Dialog onCreateDialog(final Bundle savedInstanceState)
     {
@@ -192,7 +195,7 @@ public class CreatePostFragment extends DialogFragment {
 
         logoutIV.setVisibility(View.GONE);
         toolbartitle.setText("Create Post");
-
+        createPostFragment=this;
         permissions.add(Manifest.permission.CAMERA);
         permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -244,6 +247,10 @@ public class CreatePostFragment extends DialogFragment {
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
         }
 
+    }
+
+    public static CreatePostFragment getInstance() {
+        return createPostFragment;
     }
 
     private void selectImage(Context context) {
@@ -563,7 +570,6 @@ public class CreatePostFragment extends DialogFragment {
                     binding.departmentrecycle.setVisibility(View.GONE);
                     binding.photoView.setVisibility(View.GONE);
                     new Api().getData(session,getActivity(),"createpost");
-                    openDialog("Post created successfully!","Success!");
                 }
                 else
                 {
@@ -607,6 +613,30 @@ public class CreatePostFragment extends DialogFragment {
         }
 
         return null;
+    }
+
+    public void runUi() {
+
+        new Thread() {
+            public void run() {
+                try {
+                    getActivity().runOnUiThread(new Runnable() {
+
+                        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                        @Override
+                        public void run() {
+                            openDialog("Post created successfully!","Success!");
+
+
+                        }
+                    });
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
     }
 
     private void loadSpinnerData()

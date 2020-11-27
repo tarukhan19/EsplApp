@@ -27,8 +27,6 @@ public class Api {
 
         call.enqueue(new Callback<LoadDashBoardResult>() {
 
-
-
             @Override
             public void onResponse(Call<LoadDashBoardResult> call, retrofit2.Response<LoadDashBoardResult> response) {
                 LoadDashBoardResult modelTestResult = response.body();
@@ -45,7 +43,11 @@ public class Api {
 
                 }
 
+                else if (from.equalsIgnoreCase("createpost"))
+                {
+                    CreatePostFragment.getInstance().runUi();
 
+                }
 
 
             }

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.effizent.esplapp.Activity.LoginActivity;
 import com.effizent.esplapp.Adapter.PostAdapter;
 import com.effizent.esplapp.DialogFragment.CreatePostFragment;
 import com.effizent.esplapp.R;
@@ -70,6 +72,16 @@ FragmentHomeBinding binding;
         View view = binding.getRoot();
         initialize();
 
+        binding.swipeToRefresh.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        new Api().getData(session, getActivity(),"home");
+                    }
+                }
+        );
+
+
         binding.createpostLL.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -82,6 +94,8 @@ FragmentHomeBinding binding;
                 createPostFragment.show(ft, "dialog");
             }
         });
+
+
         return view;
     }
 
@@ -126,11 +140,13 @@ FragmentHomeBinding binding;
         new Thread() {
             public void run() {
                 try {
-                    getActivity().runOnUiThread(new Runnable() {
+                    getActivity().runOnUiThread(new Runnable()
+                    {
 
                         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                         @Override
                         public void run() {
+                            binding.swipeToRefresh.setRefreshing(false);
                             parseData();
 
                         }
@@ -145,6 +161,7 @@ FragmentHomeBinding binding;
     }
 
     private void parseData() {
+        timelinePostDTOArrayList.clear();
         LoadDashBoardResult modelTestResult =session.getDashBoardRespone();
 
 

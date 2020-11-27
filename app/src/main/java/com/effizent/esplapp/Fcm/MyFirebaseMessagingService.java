@@ -15,6 +15,7 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 
 
+import com.effizent.esplapp.Activity.HomeActivity;
 import com.effizent.esplapp.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -27,7 +28,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     int MESSAGE_NOTIFICATION_ID = 0;
     Intent intent;
-    String message, contentTitle, TotalAmount;
+    String message, contentTitle;
     private SharedPreferences sp;
 
     NotificationCompat.Builder mBuilder;
@@ -36,9 +37,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         Log.e("getData",remoteMessage.getData()+"");
+
+        //{contentTitle=Accountant Pending Invoices, message=Test}
         contentTitle = remoteMessage.getData().get("contentTitle");
         message = remoteMessage.getData().get("message");
-        TotalAmount=remoteMessage.getData().get("TotalAmount");
 
         sendNotification();
 
@@ -51,12 +53,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Context context = getBaseContext();
         String id = "my_channel_01";
 
-
+        intent = new Intent(context, HomeActivity.class);
         MESSAGE_NOTIFICATION_ID = (int) (System.currentTimeMillis() & 0xfffffff);
 
         PendingIntent pIntent = PendingIntent.getActivity(context, MESSAGE_NOTIFICATION_ID, intent, MESSAGE_NOTIFICATION_ID);
 
-        mBuilder = new NotificationCompat.Builder(context);
+        mBuilder = new NotificationCompat.Builder(context,id);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mBuilder.setSmallIcon(R.mipmap.ic_launcher);
@@ -92,7 +94,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             }
         }
-        mBuilder.getNotification().flags |= Notification.FLAG_AUTO_CANCEL;
+        mBuilder.build().flags |= Notification.FLAG_AUTO_CANCEL;
 
         mNotificationManager.notify(MESSAGE_NOTIFICATION_ID, mBuilder.build());
     }

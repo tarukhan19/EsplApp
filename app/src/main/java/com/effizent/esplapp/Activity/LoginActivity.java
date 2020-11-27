@@ -132,9 +132,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     session.setLoginDetails(id,department,name,email,mobile,teamLeader,profilePicture);
                     new Api().getData(session,LoginActivity.this,"login");
 
-
-
-
                 }
                 else
                 {

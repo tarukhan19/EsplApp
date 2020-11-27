@@ -18,12 +18,18 @@ import com.effizent.esplapp.DialogFragment.CreatePostFragment;
 import com.effizent.esplapp.DialogFragment.FullscreenImageFragment;
 import com.effizent.esplapp.R;
 import com.effizent.esplapp.RetroApiResponses.Timeline_Post_List;
+import com.effizent.esplapp.Utils.TimeConversion;
 import com.effizent.esplapp.databinding.ItemDashboardBinding;
 import com.effizent.esplapp.session.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodler> {
     private Context mContext;
@@ -31,6 +37,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
     ItemDashboardBinding binding;
     SessionManager sessionManager;
     ArrayList <String> imageList;
+    String dateStr;
+    private TimeConversion timeConversion;
 
 
 
@@ -46,6 +54,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
                 R.layout.item_dashboard, parent, false);
         sessionManager=new SessionManager(mContext.getApplicationContext());
         imageList=new ArrayList<>();
+        timeConversion = new TimeConversion();
+
         return new CustomViewHodler(binding);
     }
 
@@ -63,34 +73,34 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
 
                 if (timelinePostDTOArrayList.get(position).getTitle().isEmpty())
                 {
-                    holder.binding.titleTV.setVisibility(View.GONE);
+                    holder.itemDashboardBinding.titleTV.setVisibility(View.GONE);
                 }
                 else
                 {
-                    holder.binding.titleTV.setVisibility(View.VISIBLE);
-                    holder.binding.titleTV.setText(fromBase64(timelinePostDTOArrayList.get(position).getTitle()));
+                    holder.itemDashboardBinding.titleTV.setVisibility(View.VISIBLE);
+                    holder.itemDashboardBinding.titleTV.setText(fromBase64(timelinePostDTOArrayList.get(position).getTitle()));
 
                 }
 
                 if (timelinePostDTOArrayList.get(position).getDescription().isEmpty())
                 {
-                    holder.binding.descriptionTV.setVisibility(View.GONE);
+                    holder.itemDashboardBinding.descriptionTV.setVisibility(View.GONE);
                 }
                 else
                 {
-                    holder.binding.descriptionTV.setVisibility(View.VISIBLE);
-                    holder.binding.descriptionTV.setText(fromBase64(timelinePostDTOArrayList.get(position).getDescription()));
+                    holder.itemDashboardBinding.descriptionTV.setVisibility(View.VISIBLE);
+                    holder.itemDashboardBinding.descriptionTV.setText(fromBase64(timelinePostDTOArrayList.get(position).getDescription()));
 
                 }
-                holder.binding.nameTV.setText(timelinePostDTOArrayList.get(position).getName());
-                holder.binding.timeTV.setText(timelinePostDTOArrayList.get(position).getDate());
+                holder.itemDashboardBinding.nameTV.setText(timelinePostDTOArrayList.get(position).getName());
+                holder.itemDashboardBinding.timeTV.setText(timelinePostDTOArrayList.get(position).getDate());
 
                 if (!timelinePostDTOArrayList.get(position).getProfilePic().isEmpty())
                 {
                     Picasso.with(mContext)
                             .load(timelinePostDTOArrayList.get(position).getProfilePic())
                             .fit().placeholder(R.mipmap.defaultpic)
-                            .into(holder.binding.profileImage);
+                            .into(holder.itemDashboardBinding.profileImage);
                 }
 
 
@@ -99,16 +109,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
                 if ((timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size())==0)
                 {
 
-                    holder.binding.imageLL.setVisibility(View.GONE);
+                    holder.itemDashboardBinding.imageLL.setVisibility(View.GONE);
                 }
                 else if ((timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size())==1)
                 {
 
-                    holder.binding.imageLL.setVisibility(View.VISIBLE);
-                    holder.binding.singleImageLL.setVisibility(View.VISIBLE);
-                    holder.binding.doubleimageImageLL.setVisibility(View.GONE);
+                    holder.itemDashboardBinding.imageLL.setVisibility(View.VISIBLE);
+                    holder.itemDashboardBinding.singleImageLL.setVisibility(View.VISIBLE);
+                    holder.itemDashboardBinding.doubleimageImageLL.setVisibility(View.GONE);
                     Glide.with(mContext).load(timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().get(0).getImage())
-                            .placeholder(R.color.grey).into(holder.binding.singleimageIV);
+                            .placeholder(R.color.grey).into(holder.itemDashboardBinding.singleimageIV);
 
 
                 }
@@ -116,60 +126,63 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
                 else if ((timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size())==2)
                 {
 
-                    holder.binding.imageLL.setVisibility(View.VISIBLE);
-                    holder.binding.singleImageLL.setVisibility(View.GONE);
-                    holder.binding.doubleimageImageLL.setVisibility(View.VISIBLE);
-                    holder.binding.countLL.setVisibility(View.GONE);
+                    holder.itemDashboardBinding.imageLL.setVisibility(View.VISIBLE);
+                    holder.itemDashboardBinding.singleImageLL.setVisibility(View.GONE);
+                    holder.itemDashboardBinding.doubleimageImageLL.setVisibility(View.VISIBLE);
+                    holder.itemDashboardBinding.countLL.setVisibility(View.GONE);
 
                     Glide.with(mContext).load(timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().get(0).getImage())
-                            .placeholder(R.color.grey).into(holder.binding.doubleimage1IV);
+                            .placeholder(R.color.grey).into(holder.itemDashboardBinding.doubleimage1IV);
 
 
                     Glide.with(mContext).load(timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().get(1).getImage())
-                            .placeholder(R.color.grey).into(holder.binding.doubleimage2IV);
+                            .placeholder(R.color.grey).into(holder.itemDashboardBinding.doubleimage2IV);
                 }
 
                 else if ((timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size())==3)
                 {
 
-                    holder.binding.imageLL.setVisibility(View.VISIBLE);
-                    holder.binding.singleImageLL.setVisibility(View.VISIBLE);
-                    holder.binding.doubleimageImageLL.setVisibility(View.VISIBLE);
-                    holder.binding.countLL.setVisibility(View.GONE);
+                    holder.itemDashboardBinding.imageLL.setVisibility(View.VISIBLE);
+                    holder.itemDashboardBinding.singleImageLL.setVisibility(View.VISIBLE);
+                    holder.itemDashboardBinding.doubleimageImageLL.setVisibility(View.VISIBLE);
+                    holder.itemDashboardBinding.countLL.setVisibility(View.GONE);
 
                     Glide.with(mContext).load(timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().get(0).getImage())
-                            .placeholder(R.color.grey).into(holder.binding.singleimageIV);
+                            .placeholder(R.color.grey).into(holder.itemDashboardBinding.singleimageIV);
 
 
                     Glide.with(mContext).load(timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().get(1).getImage())
-                            .placeholder(R.color.grey).into(holder.binding.doubleimage1IV);
+                            .placeholder(R.color.grey).into(holder.itemDashboardBinding.doubleimage1IV);
 
 
                     Glide.with(mContext).load(timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().get(2).getImage())
-                            .placeholder(R.color.grey).into(holder.binding.doubleimage2IV);
+                            .placeholder(R.color.grey).into(holder.itemDashboardBinding.doubleimage2IV);
                 }
 
                 else
                 {
 
-                    holder.binding.imageLL.setVisibility(View.VISIBLE);
-                    holder.binding.singleImageLL.setVisibility(View.VISIBLE);
-                    holder.binding.doubleimageImageLL.setVisibility(View.VISIBLE);
-                    holder.binding.countLL.setVisibility(View.VISIBLE);
+                    holder.itemDashboardBinding.imageLL.setVisibility(View.VISIBLE);
+                    holder.itemDashboardBinding.singleImageLL.setVisibility(View.VISIBLE);
+                    holder.itemDashboardBinding.doubleimageImageLL.setVisibility(View.VISIBLE);
+                    holder.itemDashboardBinding.countLL.setVisibility(View.VISIBLE);
 
                     Glide.with(mContext).load(timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().get(0).getImage())
-                            .placeholder(R.color.grey).into(holder.binding.singleimageIV);
+                            .placeholder(R.color.grey).into(holder.itemDashboardBinding.singleimageIV);
 
 
                     Glide.with(mContext).load(timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().get(1).getImage())
-                            .placeholder(R.color.grey).into(holder.binding.doubleimage1IV);
+                            .placeholder(R.color.grey).into(holder.itemDashboardBinding.doubleimage1IV);
 
 
                     Glide.with(mContext).load(timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().get(2).getImage())
-                            .placeholder(R.color.grey).into(holder.binding.doubleimage2IV);
+                            .placeholder(R.color.grey).into(holder.itemDashboardBinding.doubleimage2IV);
                     int count=timelinePostDTOArrayList.get(position).getTimelineImageDTOArrayList().size()-3;
-                    holder.binding.countTV.setText("+"+count);
+                    holder.itemDashboardBinding.countTV.setText("+"+count);
                 }
+
+
+
             }
             catch (Exception e)
             {
@@ -177,7 +190,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
             }
 
 
-            holder.binding.imageLL.setOnClickListener(new View.OnClickListener() {
+            holder.itemDashboardBinding.imageLL.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     imageList.clear();
@@ -212,18 +225,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHodl
 
         return null;
     }
+
     @Override
-    public int getItemCount() {
-        return timelinePostDTOArrayList == null ? 0 : timelinePostDTOArrayList.size();
+    public int getItemCount()
+    {
+        return timelinePostDTOArrayList != null ? timelinePostDTOArrayList.size() : 0;
     }
 
     public class CustomViewHodler extends RecyclerView.ViewHolder {
         //            ImageView imageView;
-        private ItemDashboardBinding binding;
+        private ItemDashboardBinding itemDashboardBinding;
 
         public CustomViewHodler(ItemDashboardBinding itemView) {
             super(itemView.getRoot());
-            binding = itemView;
+            itemDashboardBinding = itemView;
         }
 
     }
