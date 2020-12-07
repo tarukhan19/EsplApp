@@ -60,8 +60,6 @@ public class HomeActivity extends AppCompatActivity
     private static final int HIGH_PRIORITY_UPDATE =1 ;
     AppUpdateManager appUpdateManager;
     private static final int MY_REQUEST_CODE = 11;
-
-
     private HomeFragment homeFragment = new HomeFragment();
     private ProfileFragment profileFragment = new ProfileFragment();
     private NotificationFragment notificationFragment = new NotificationFragment();
