@@ -61,6 +61,14 @@ public class NotificationFragment extends Fragment {
         notificationListDTOList = new ArrayList<>();
         adapter = new NotificationAdapter(getActivity(), notificationListDTOList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+
+        binding.recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setItemViewCacheSize(20);
+        binding.recyclerView.setDrawingCacheEnabled(true);
+        binding.recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        binding.recyclerView.scheduleLayoutAnimation();
+        binding.recyclerView.setNestedScrollingEnabled(false);
+
         binding.recyclerView.setLayoutManager(mLayoutManager);
         binding.recyclerView.setAdapter(adapter);
         loadNotification();
@@ -90,14 +98,7 @@ public class NotificationFragment extends Fragment {
                         notificationListApi.setCreatedDate(modelTestResult.getNotificationList().get(i).getCreatedDate());
                         notificationListApi.setTitle(modelTestResult.getNotificationList().get(i).getTitle());
                         notificationListApi.setNotificationMessage(modelTestResult.getNotificationList().get(i).getNotificationMessage());
-
-
                         notificationListDTOList.add(notificationListApi);
-
-
-
-
-
                     }
                     adapter.notifyDataSetChanged();
                 }

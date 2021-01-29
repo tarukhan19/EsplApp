@@ -3,6 +3,7 @@ package com.effizent.esplapp.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<NotificationListApi> notificationListApiList;
     Activity activity;
     SessionManager sessionManager;
+    private String head1 = "<head><style>@font-face {font-family: 'bellota-light';src: url('file:///android_asset/fonts/bellota-light.otf');}body {font-family: 'bellota-light';}</style></head>";
 
     ItemNotificationlistBinding binding;
     public NotificationAdapter(Context mcontex, List<NotificationListApi> notificationListApiList)
@@ -49,8 +51,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         {
             final ViewHolderPollAdapter holder = (ViewHolderPollAdapter) h;
             holder.binding.notifTitleTV.setText(notificationListApiList.get(position).getTitle());
-            holder.binding.notifMsg.setText(notificationListApiList.get(position).getNotificationMessage());
+          //  holder.binding.notifMsg.setText(notificationListApiList.get(position).getNotificationMessage());
             holder.binding.dateTV.setText(notificationListApiList.get(position).getCreatedDate());
+            String notificationMsg=notificationListApiList.get(position).getNotificationMessage();
+            notificationMsg = notificationMsg.replace("\\n", "");
+            notificationMsg = notificationMsg.replace("\\t", "").trim();
+            binding.webview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+            binding.webview.setNestedScrollingEnabled(true);
+            notificationMsg = "<html>" + head1
+                    + "<body style=\"font-family: FiraSans-Light\">" + notificationMsg
+                    + "</body></html>";
+            binding.webview.loadDataWithBaseURL("", notificationMsg, "text/html", "utf-8", "");
         }
 
 
