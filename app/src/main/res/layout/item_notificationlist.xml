@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:elevation="@dimen/dimen_5dp"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/dimen_5dp"
+            android:padding="@dimen/dimen_5dp"
+            >
+
+            <ImageView
+                android:id="@+id/notifImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                />
+
+
+            <com.effizent.esplapp.cusFnt.TextViewAirenregular
+                android:id="@+id/notifTitleTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="test"
+                android:textColor="@color/black"
+                android:paddingLeft="@dimen/dimen_5dp"
+                android:textSize="@dimen/dimen_14sp"
+                android:paddingBottom="@dimen/dimen_5dp"
+                />
+
+            <com.effizent.esplapp.cusFnt.TextViewAirenregular
+                android:id="@+id/notifMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="test"
+                android:textColor="@color/black"
+                android:paddingLeft="@dimen/dimen_5dp"
+                android:textSize="@dimen/dimen_14sp"
+                android:paddingBottom="@dimen/dimen_5dp"
+                />
+
+            <com.effizent.esplapp.cusFnt.TextViewBoldFont
+                android:id="@+id/dateTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="test"
+                android:textColor="@color/black"
+                android:padding="@dimen/dimen_5dp"
+                android:textSize="@dimen/dimen_14sp"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black"
+            />
+    </LinearLayout>
+
+
+
+</layout>

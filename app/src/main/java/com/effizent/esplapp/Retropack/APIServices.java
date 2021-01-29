@@ -4,6 +4,7 @@ import com.effizent.esplapp.RetroApiResponses.LoadDashBoardResult;
 import com.effizent.esplapp.RetroApiResponses.CheckUserStatus;
 import com.effizent.esplapp.RetroApiResponses.CreatePostResult;
 import com.effizent.esplapp.RetroApiResponses.LoadDepartmentResult;
+import com.effizent.esplapp.RetroApiResponses.LoadNotificationResult;
 import com.effizent.esplapp.RetroApiResponses.LoginResult;
 
 
@@ -55,5 +56,9 @@ public interface APIServices {
     Call<LoadDashBoardResult> loadDashboardData(
             @Field("EmpId") String empId);
 
-
+    @FormUrlEncoded
+    @POST("HomeLander_Notifications.ashx?")
+    Call<LoadNotificationResult> loadNotificationData(
+            @Field("EmpId") String empId,
+            @Field("Dept") String department);
 }

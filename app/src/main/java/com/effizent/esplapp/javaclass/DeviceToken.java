@@ -25,7 +25,11 @@ public String getDeviceToken(SessionManager session)
 
                     // Get new FCM registration token
                     token = task.getResult();
-                    session.setDeviceToken(token);
+                    if (!token.isEmpty())
+                    {
+                        session.setDeviceToken(token);
+                    }
+
                    Log.e("token",token);
 
 

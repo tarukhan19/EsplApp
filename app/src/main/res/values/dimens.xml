@@ -16,4 +16,6 @@
     <dimen name="d_200">200dp</dimen>
     <dimen name="d_40">40dp</dimen>
     <dimen name="_8dp">8dp</dimen>
+    <dimen name="dimen_5dp">5dp</dimen>
+    <dimen name="dimen_14sp">14sp</dimen>
 </resources>
