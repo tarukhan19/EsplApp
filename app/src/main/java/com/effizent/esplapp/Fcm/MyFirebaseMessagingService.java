@@ -54,6 +54,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String id = "my_channel_01";
 
         intent = new Intent(context, HomeActivity.class);
+        intent.putExtra("from","notification");
         MESSAGE_NOTIFICATION_ID = (int) (System.currentTimeMillis() & 0xfffffff);
 
         PendingIntent pIntent = PendingIntent.getActivity(context, MESSAGE_NOTIFICATION_ID, intent, MESSAGE_NOTIFICATION_ID);

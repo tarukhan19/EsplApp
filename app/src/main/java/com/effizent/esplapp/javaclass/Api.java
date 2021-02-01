@@ -22,8 +22,8 @@ public class Api {
     {
         Retrofit retrofit = RetrofitFactory.getRetrofit();
         APIServices service = retrofit.create(APIServices.class);
-        service.loadDashboardData(session.getLoginDetails().get(SessionManager.KEY_ID));
-        Call<LoadDashBoardResult> call = service.loadDashboardData(session.getLoginDetails().get(SessionManager.KEY_ID));
+        service.loadDashboardData(session.getLoginDetails().get(SessionManager.KEY_USERID));
+        Call<LoadDashBoardResult> call = service.loadDashboardData(session.getLoginDetails().get(SessionManager.KEY_USERID));
 
         call.enqueue(new Callback<LoadDashBoardResult>() {
 

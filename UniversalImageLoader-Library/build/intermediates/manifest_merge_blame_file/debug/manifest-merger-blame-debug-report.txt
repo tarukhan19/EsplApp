@@ -6,8 +6,8 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="20"
-8-->F:\effizent\Homelander\UniversalImageLoader-Library\src\main\AndroidManifest.xml
+8-->F:\effizentOct\HomeLander\UniversalImageLoader-Library\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="28" />
-9-->F:\effizent\Homelander\UniversalImageLoader-Library\src\main\AndroidManifest.xml
+9-->F:\effizentOct\HomeLander\UniversalImageLoader-Library\src\main\AndroidManifest.xml
 10
 11</manifest>

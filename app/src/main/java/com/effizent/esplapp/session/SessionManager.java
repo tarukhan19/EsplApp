@@ -24,7 +24,7 @@ public class SessionManager
     public static final String IS_LOGIN = "IsLoggedIn";
     public static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     public static final String IS_WORKING_HOURS_ADDED = "is_working_hours_added";
-    public static final String KEY_ID = "ID";
+    public static final String KEY_USERID = "KEY_USERID";
     public static final String KEY_DEPARTMENT = "department";
     public static final String KEY_NAME = "NAME";
     public static final String KEY_EMAIL = "EMAIL";
@@ -35,7 +35,7 @@ public class SessionManager
     public static final String KEY_POSITION = "position";
     public static final String KEY_DASHBOARD_RESPONSE="dashboardresp";
     public static final String KEY_DEVICE_TOKEN = "devicetoken";
-
+    public static final String KEY_NOTI_DEPARTMENT = "KEY_NOTI_DEPARTMENT";
 
     public HashMap<String, String> getList() {
         HashMap<String, String> user = new HashMap<>();
@@ -71,29 +71,33 @@ public class SessionManager
     }
 
     public void setLoginDetails(String id,String department,String name,String email, String mobile
-            ,String teamLeader,String profilePicture) {
+            ,String teamLeader,String profilePicture,String notidepartment) {
         editor.putBoolean(IS_LOGIN, true);
 
-        editor.putString(KEY_ID, id);
+        editor.putString(KEY_USERID, id);
         editor.putString(KEY_DEPARTMENT,department );
         editor.putString(KEY_NAME, name);
         editor.putString(KEY_EMAIL, email);
         editor.putString(KEY_MOBILE, mobile);
         editor.putString(KEY_TEAMLEADER, teamLeader);
         editor.putString(KEY_PROFILEPICTURE,profilePicture );
+        editor.putString(KEY_NOTI_DEPARTMENT,notidepartment );
+
+
 
         editor.commit();
     }
 
     public HashMap<String, String> getLoginDetails() {
         HashMap<String, String> user = new HashMap<>();
-        user.put(KEY_ID, pref.getString(KEY_ID, ""));
+        user.put(KEY_USERID, pref.getString(KEY_USERID, ""));
         user.put(KEY_DEPARTMENT, pref.getString(KEY_DEPARTMENT, ""));
         user.put(KEY_NAME, pref.getString(KEY_NAME, ""));
         user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, ""));
         user.put(KEY_MOBILE, pref.getString(KEY_MOBILE, ""));
         user.put(KEY_TEAMLEADER, pref.getString(KEY_TEAMLEADER, ""));
         user.put(KEY_PROFILEPICTURE, pref.getString(KEY_PROFILEPICTURE, ""));
+        user.put(KEY_NOTI_DEPARTMENT, pref.getString(KEY_NOTI_DEPARTMENT, ""));
 
         return user;
     }

@@ -128,8 +128,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     String mobile=loginResult.getDetailsArrayList().get(0).getMobile();
                     String teamLeader=loginResult.getDetailsArrayList().get(0).getTeamLeader();
                     String profilePicture=loginResult.getDetailsArrayList().get(0).getProfilePicture();
+                    String notidepartment=loginResult.getDetailsArrayList().get(0).getDept_Notifications();
 
-                    session.setLoginDetails(id,department,name,email,mobile,teamLeader,profilePicture);
+                    session.setLoginDetails(id,department,name,email,mobile,teamLeader,profilePicture,notidepartment);
                     new Api().getData(session,LoginActivity.this,"login");
 
                 }

@@ -78,16 +78,16 @@ public class NotificationFragment extends Fragment {
     private void loadNotification() {
         Retrofit retrofit = RetrofitFactory.getRetrofit();
         APIServices service = retrofit.create(APIServices.class);
-        service.loadNotificationData(sessionManager.getLoginDetails().get(SessionManager.KEY_ID),sessionManager.getLoginDetails().get(SessionManager.KEY_DEPARTMENT));
-        Call<LoadNotificationResult> call = service.loadNotificationData(sessionManager.getLoginDetails().get(SessionManager.KEY_ID),sessionManager.getLoginDetails().get(SessionManager.KEY_DEPARTMENT));
+        service.loadNotificationData(sessionManager.getLoginDetails().get(SessionManager.KEY_USERID),sessionManager.getLoginDetails().get(SessionManager.KEY_NOTI_DEPARTMENT));
+        Call<LoadNotificationResult> call = service.loadNotificationData(sessionManager.getLoginDetails().get(SessionManager.KEY_USERID),sessionManager.getLoginDetails().get(SessionManager.KEY_NOTI_DEPARTMENT));
 
         call.enqueue(new Callback<LoadNotificationResult>() {
 
             @Override
             public void onResponse(Call<LoadNotificationResult> call, retrofit2.Response<LoadNotificationResult> response) {
                 LoadNotificationResult modelTestResult = response.body();
-                Log.e("responegetcode",modelTestResult.getCode());
-              //  session.setDashBoardRespone(modelTestResult);
+
+                //  session.setDashBoardRespone(modelTestResult);
 
                 if (modelTestResult.getCode().equalsIgnoreCase("200")
                         && modelTestResult.getStatus().equalsIgnoreCase("Success"))

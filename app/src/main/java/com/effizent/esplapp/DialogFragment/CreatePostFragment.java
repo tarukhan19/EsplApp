@@ -529,7 +529,7 @@ public class CreatePostFragment extends DialogFragment {
 
         RequestBody rbTitle = RequestBody.create(MediaType.parse("multipart/form-data"), title);
         RequestBody rbDescription = RequestBody.create(MediaType.parse("multipart/form-data"), description);
-        RequestBody rbId = RequestBody.create(MediaType.parse("multipart/form-data"), session.getLoginDetails().get(SessionManager.KEY_ID));
+        RequestBody rbId = RequestBody.create(MediaType.parse("multipart/form-data"), session.getLoginDetails().get(SessionManager.KEY_USERID));
         RequestBody rbDepartment = RequestBody.create(MediaType.parse("multipart/form-data"), department);
 
 

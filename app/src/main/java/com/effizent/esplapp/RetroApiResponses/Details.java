@@ -1,7 +1,11 @@
 package com.effizent.esplapp.RetroApiResponses;
 
 public class Details {
-String Id,Department,Name,Email,Mobile,TeamLeader,DeviceId,ProfilePicture;
+String Id,Department,Name,Email,Mobile,TeamLeader,DeviceId,ProfilePicture,Dept_Notifications;
+
+    public String getDept_Notifications() {
+        return Dept_Notifications;
+    }
 
     public String getId() {
         return Id;
@@ -35,7 +39,8 @@ String Id,Department,Name,Email,Mobile,TeamLeader,DeviceId,ProfilePicture;
         return ProfilePicture;
     }
 
-    public Details(String id, String department, String name, String email, String mobile, String teamLeader, String deviceId, String profilePicture) {
+    public Details(String id, String department, String name, String email, String mobile,
+                   String teamLeader, String deviceId, String profilePicture,String deptNotifications) {
         Id = id;
         Department = department;
         Name = name;
@@ -44,5 +49,6 @@ String Id,Department,Name,Email,Mobile,TeamLeader,DeviceId,ProfilePicture;
         TeamLeader = teamLeader;
         DeviceId = deviceId;
         ProfilePicture = profilePicture;
+        Dept_Notifications=deptNotifications;
     }
 }

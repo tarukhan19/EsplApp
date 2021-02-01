@@ -177,6 +177,18 @@ public class HomeActivity extends AppCompatActivity
                 ContextCompat.getDrawable(this, R.mipmap.notification)));
         sessionManager = new SessionManager(getApplicationContext());
 
+        if (sessionManager.getLoginDetails().get(SessionManager.KEY_USERID).isEmpty())
+        {
+            sessionManager.logoutUser();
+            Intent intent=new Intent(HomeActivity.this, LoginActivity
+
+                    .class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            overridePendingTransition(R.anim.trans_left_in,
+                    R.anim.trans_left_out);
+            finish();
+        }
 
         binding.fluidBottomNavigation.setItems(fluidBottomNavigationItemArrayList);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -190,12 +202,24 @@ public class HomeActivity extends AppCompatActivity
                 .add(R.id.content_frame, notificationFragment, "NOTIFICATION").hide(notificationFragment).commit();
 
 
-        fragmentManager.beginTransaction().hide(activeFragment).show(homeFragment).commit();
-        toolbartitle.setText("Home");
+        if (getIntent().hasExtra("from"))
+        {
+            CURRENT_TAG = ID_NOTIFICATION;
+            fragmentManager.beginTransaction().hide(activeFragment).show(notificationFragment).commit();
+            activeFragment=notificationFragment;
+            toolbartitle.setText("Notification");
+            binding.fluidBottomNavigation.selectTab(2);
+        }
+        else
+        {
+            CURRENT_TAG = ID_HOME;
+            fragmentManager.beginTransaction().hide(activeFragment).show(homeFragment).commit();
+            activeFragment=homeFragment;
+            toolbartitle.setText("Home");
+            binding.fluidBottomNavigation.selectTab(0);
+        }
 
         checkUpdate();
-
-
 
 
     }
