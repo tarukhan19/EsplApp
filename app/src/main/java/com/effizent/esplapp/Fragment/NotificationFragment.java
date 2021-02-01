@@ -68,14 +68,14 @@ public class NotificationFragment extends Fragment {
         binding.recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         binding.recyclerView.scheduleLayoutAnimation();
         binding.recyclerView.setNestedScrollingEnabled(false);
-
         binding.recyclerView.setLayoutManager(mLayoutManager);
         binding.recyclerView.setAdapter(adapter);
         loadNotification();
         return view;
     }
 
-    private void loadNotification() {
+    private void loadNotification()
+    {
         Retrofit retrofit = RetrofitFactory.getRetrofit();
         APIServices service = retrofit.create(APIServices.class);
         service.loadNotificationData(sessionManager.getLoginDetails().get(SessionManager.KEY_USERID),sessionManager.getLoginDetails().get(SessionManager.KEY_NOTI_DEPARTMENT));
@@ -84,10 +84,9 @@ public class NotificationFragment extends Fragment {
         call.enqueue(new Callback<LoadNotificationResult>() {
 
             @Override
-            public void onResponse(Call<LoadNotificationResult> call, retrofit2.Response<LoadNotificationResult> response) {
+            public void onResponse(Call<LoadNotificationResult> call, retrofit2.Response<LoadNotificationResult> response)
+            {
                 LoadNotificationResult modelTestResult = response.body();
-
-                //  session.setDashBoardRespone(modelTestResult);
 
                 if (modelTestResult.getCode().equalsIgnoreCase("200")
                         && modelTestResult.getStatus().equalsIgnoreCase("Success"))
